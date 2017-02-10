@@ -90,18 +90,10 @@ public class TennisGame2 implements TennisGame {
 		return WIN_FOR + " " + name;
 	}
 
-	private void player1WonPoint() {
-		player1WonPoints++;
-	}
-
-	private void player2WonPoint() {
-		player2WonPoints++;
-	}
-
-	public void wonPoint(String player) {
+		public void wonPoint(String player) {
 		if (player == player1Name)
-			player1WonPoint();
+			player1WonPoints++;
 		else
-			player2WonPoint();
+			player2WonPoints++;
 	}
 }
