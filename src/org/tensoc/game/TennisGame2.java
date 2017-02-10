@@ -41,12 +41,28 @@ public class TennisGame2 implements TennisGame {
 		String P2res = "";
 
 		String score = "";
-		if (player1WonPoints == player2WonPoints && player1WonPoints < 3) {
+		if (player1WonPoints == player2WonPoints && player1WonPoints < 3)
 			return getNameForPointsWon(player1WonPoints) + "-" + ALL;
-		}
 		
 		if (player1WonPoints == player2WonPoints && player1WonPoints >= 3)
 			return DEUCE;
+
+		if (player1WonPoints == player2WonPoints+1 && player2WonPoints >= 3) {
+			return ADVANTAGE + " " + player1Name;
+		}
+
+		if (player2WonPoints == player1WonPoints+1 && player1WonPoints >= 3) {
+			return ADVANTAGE + " " + player2Name;
+		}
+
+		if (player1WonPoints >= 4 && player2WonPoints >= 0
+				&& (player1WonPoints - player2WonPoints) >= 2) {
+			return  WIN_FOR + " " + player1Name;
+		}
+		if (player2WonPoints >= 4 && player1WonPoints >= 0
+				&& (player2WonPoints - player1WonPoints) >= 2) {
+			return  WIN_FOR + " " + player2Name;
+		}
 
 		if (player1WonPoints > 0 && player2WonPoints == 0) {
 			P1res = getNameForPointsWon(player1WonPoints);
@@ -72,6 +88,7 @@ public class TennisGame2 implements TennisGame {
 				P2res = THIRTY;
 			score = P1res + "-" + P2res;
 		}
+		
 		if (player2WonPoints > player1WonPoints && player2WonPoints < 4) {
 			if (player2WonPoints == 2)
 				P2res = THIRTY;
@@ -84,23 +101,7 @@ public class TennisGame2 implements TennisGame {
 			score = P1res + "-" + P2res;
 		}
 
-		if (player1WonPoints > player2WonPoints && player2WonPoints >= 3) {
-			score = ADVANTAGE + " " + player1Name;
-		}
-
-		if (player2WonPoints > player1WonPoints && player1WonPoints >= 3) {
-			score = ADVANTAGE + " " + player2Name;
-		}
-
-		if (player1WonPoints >= 4 && player2WonPoints >= 0
-				&& (player1WonPoints - player2WonPoints) >= 2) {
-			score = WIN_FOR + " " + player1Name;
-		}
-		if (player2WonPoints >= 4 && player1WonPoints >= 0
-				&& (player2WonPoints - player1WonPoints) >= 2) {
-			score = WIN_FOR + " " + player2Name;
-		}
-		return score;
+return score;
 	}
 
 	private void player1WonPoint() {
