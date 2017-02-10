@@ -1,14 +1,15 @@
 package org.tensoc.game;
 
 public class TennisGame1 implements TennisGame {
-	private static final String FORTY = "Forty";
-	private static final String WIN_FOR = "Win for";
-	private static final String ADVANTAGE = "Advantage";
-	private static final String DEUCE = "Deuce";
-	private static final String THIRTY = "Thirty";
-	private static final String FIFTEEN = "Fifteen";
-	private static final String ALL = "All";
-	private static final String LOVE = "Love";
+	public static final String FORTY = "Forty";
+	public static final String WIN_FOR = "Win for";
+	public static final String ADVANTAGE = "Advantage";
+	public static final String DEUCE = "Deuce";
+	public static final String THIRTY = "Thirty";
+	public static final String FIFTEEN = "Fifteen";
+	public static final String ALL = "All";
+	public static final String LOVE = "Love";
+
 	private int pointsWonByPlayer1 = 0;
 	private int pointsWonByPlayer2 = 0;
 	private String player1Name;
@@ -22,40 +23,44 @@ public class TennisGame1 implements TennisGame {
 	public void wonPoint(String playerName) {
 		if (playerName == player1Name)
 			pointsWonByPlayer1 += 1;
-		else if(playerName == player2Name)
+		else if (playerName == player2Name)
 			pointsWonByPlayer2 += 1;
+	}
+
+	private String getNamesForBasicScore(int score) {
+		switch (score) {
+		case 0:
+			return LOVE;
+		case 1:
+			return FIFTEEN;
+		case 2:
+			return THIRTY;
+		case 3:
+			return FORTY;
+		default:
+			return "Unnamed score";
+		}
 	}
 
 	public String getScore() {
 		String score = "";
-		int tempScore = 0;
 		if (pointsWonByPlayer1 == pointsWonByPlayer2) {
-			switch (pointsWonByPlayer1) {
-			case 0:
-				score = LOVE+"-"+ALL;
-				break;
-			case 1:
-				score = FIFTEEN+"-"+ALL;
-				break;
-			case 2:
-				score = THIRTY+"-"+ALL;
-				break;
-			default:
+			if(pointsWonByPlayer1<3)
+				score = getNamesForBasicScore(pointsWonByPlayer1)+"-"+ALL;
+			else	
 				score = DEUCE;
-				break;
-
-			}
 		} else if (pointsWonByPlayer1 >= 4 || pointsWonByPlayer2 >= 4) {
 			int minusResult = pointsWonByPlayer1 - pointsWonByPlayer2;
 			if (minusResult == 1)
-				score = ADVANTAGE+" "+player1Name;
+				score = ADVANTAGE + " " + player1Name;
 			else if (minusResult == -1)
-				score = ADVANTAGE+" "+player2Name;
+				score = ADVANTAGE + " " + player2Name;
 			else if (minusResult >= 2)
-				score = WIN_FOR+" "+player1Name;
+				score = WIN_FOR + " " + player1Name;
 			else
-				score = WIN_FOR+" "+player2Name;
+				score = WIN_FOR + " " + player2Name;
 		} else {
+			int tempScore = 0;
 			for (int i = 1; i < 3; i++) {
 				if (i == 1)
 					tempScore = pointsWonByPlayer1;
@@ -63,20 +68,7 @@ public class TennisGame1 implements TennisGame {
 					score += "-";
 					tempScore = pointsWonByPlayer2;
 				}
-				switch (tempScore) {
-				case 0:
-					score += LOVE;
-					break;
-				case 1:
-					score += FIFTEEN;
-					break;
-				case 2:
-					score += THIRTY;
-					break;
-				case 3:
-					score += FORTY;
-					break;
-				}
+				score += getNamesForBasicScore(tempScore);
 			}
 		}
 		return score;
