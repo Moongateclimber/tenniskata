@@ -43,22 +43,19 @@ public class TennisGame2 implements TennisGame {
 		if (player1WonPoints == player2WonPoints && player1WonPoints >= 3)
 			return DEUCE;
 
-		if (player1WonPoints == player2WonPoints+1 && player2WonPoints >= 3) {
+		if (player1WonPoints == player2WonPoints+1 && player2WonPoints >= 3)
 			return ADVANTAGE + " " + player1Name;
-		}
 
-		if (player2WonPoints == player1WonPoints+1 && player1WonPoints >= 3) {
+		if (player2WonPoints == player1WonPoints+1 && player1WonPoints >= 3) 
 			return ADVANTAGE + " " + player2Name;
-		}
 
 		if (player1WonPoints >= 4 
-				&& (player1WonPoints - player2WonPoints) >= 2) {
+				&& (player1WonPoints - player2WonPoints) >= 2) 
 			return  WIN_FOR + " " + player1Name;
-		}
+
 		if (player2WonPoints >= 4 
-				&& (player2WonPoints - player1WonPoints) >= 2) {
+				&& (player2WonPoints - player1WonPoints) >= 2) 
 			return  WIN_FOR + " " + player2Name;
-		}
 		
 		return getNameForPointsWon(player1WonPoints)+"-"+getNameForPointsWon(player2WonPoints);
 	}
