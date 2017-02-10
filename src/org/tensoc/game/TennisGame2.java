@@ -37,10 +37,6 @@ public class TennisGame2 implements TennisGame {
 	}
 
 	public String getScore() {
-		String P1res = "";
-		String P2res = "";
-
-		String score = "";
 		if (player1WonPoints == player2WonPoints && player1WonPoints < 3)
 			return getNameForPointsWon(player1WonPoints) + "-" + ALL;
 		
