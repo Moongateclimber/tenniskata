@@ -10,8 +10,7 @@ public class TennisGame1 implements TennisGame {
 	public static final String ALL = "All";
 	public static final String LOVE = "Love";
 
-	private int pointsWonByPlayer1 = 0;
-	private int pointsWonByPlayer2 = 0;
+	private int pointsWonByPlayer[] = new int[2];
 	private String player1Name;
 	private String player2Name;
 
@@ -22,9 +21,9 @@ public class TennisGame1 implements TennisGame {
 
 	public void wonPoint(String playerName) {
 		if (playerName == player1Name)
-			pointsWonByPlayer1 += 1;
+			pointsWonByPlayer[0] += 1;
 		else if (playerName == player2Name)
-			pointsWonByPlayer2 += 1;
+			pointsWonByPlayer[1] += 1;
 	}
 
 	private String getNamesForBasicScore(int score) {
@@ -43,7 +42,7 @@ public class TennisGame1 implements TennisGame {
 	}
 	
 	private boolean isDeuce() {
-		return pointsWonByPlayer1 == pointsWonByPlayer2;
+		return pointsWonByPlayer[0] == pointsWonByPlayer[1];
 	}
 	
 	private boolean lessThanForty(int score) {
@@ -52,13 +51,15 @@ public class TennisGame1 implements TennisGame {
 
 	public String getScore() {
 		if (isDeuce())
-			if(lessThanForty(pointsWonByPlayer1)) 
-				return getNamesForBasicScore(pointsWonByPlayer1)+"-"+ALL;
+			if(lessThanForty(pointsWonByPlayer[0])) 
+				return getNamesForBasicScore(pointsWonByPlayer[0])+"-"+ALL;
 			else
 				return DEUCE;
+		
+		
 
-		if (pointsWonByPlayer1 >= 4 || pointsWonByPlayer2 >= 4) {
-			int minusResult = pointsWonByPlayer1 - pointsWonByPlayer2;
+		if (pointsWonByPlayer[0] >= 4 || pointsWonByPlayer[1] >= 4) {
+			int minusResult = pointsWonByPlayer[0] - pointsWonByPlayer[1];
 			if (minusResult == 1)
 				return ADVANTAGE + " " + player1Name;
 			else if (minusResult == -1)
@@ -72,10 +73,10 @@ public class TennisGame1 implements TennisGame {
 			int tempScore = 0;
 			for (int i = 1; i < 3; i++) {
 				if (i == 1)
-					tempScore = pointsWonByPlayer1;
+					tempScore = pointsWonByPlayer[0];
 				else {
 					score += "-";
-					tempScore = pointsWonByPlayer2;
+					tempScore = pointsWonByPlayer[1];
 				}
 				score += getNamesForBasicScore(tempScore);
 			}
