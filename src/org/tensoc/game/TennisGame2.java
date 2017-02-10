@@ -2,7 +2,15 @@ package org.tensoc.game;
 
 public class TennisGame2 implements TennisGame
 {
-    private int player1WonPoints = 0;
+    private static final String FORTY = "Forty";
+	private static final String DEUCE = "Deuce";
+	private static final String ALL = "All";
+	private static final String THIRTY = "Thirty";
+	private static final String FIFTEEN = "Fifteen";
+	private static final String LOVE = "Love";
+	private static final String WIN_FOR = "Win for";
+	private static final String ADVANTAGE = "Advantage";
+	private int player1WonPoints = 0;
     private int player2WonPoints = 0;
     
     private String player1Name;
@@ -21,89 +29,88 @@ public class TennisGame2 implements TennisGame
         if (player1WonPoints == player2WonPoints && player1WonPoints < 4)
         {
             if (player1WonPoints==0)
-                score = "Love";
+                score = LOVE;
             if (player1WonPoints==1)
-                score = "Fifteen";
+                score = FIFTEEN;
             if (player1WonPoints==2)
-                score = "Thirty";
-            score += "-All";
+                score = THIRTY;
+            score += "-"+ALL;
         }
         if (player1WonPoints==player2WonPoints && player1WonPoints>=3)
-            score = "Deuce";
+            score = DEUCE;
         
         if (player1WonPoints > 0 && player2WonPoints==0)
         {
             if (player1WonPoints==1)
-                P1res = "Fifteen";
+                P1res = FIFTEEN;
             if (player1WonPoints==2)
-                P1res = "Thirty";
+                P1res = THIRTY;
             if (player1WonPoints==3)
-                P1res = "Forty";
+                P1res = FORTY;
             
-            P2res = "Love";
+            P2res = LOVE;
             score = P1res + "-" + P2res;
         }
         if (player2WonPoints > 0 && player1WonPoints==0)
         {
             if (player2WonPoints==1)
-                P2res = "Fifteen";
+                P2res = FIFTEEN;
             if (player2WonPoints==2)
-                P2res = "Thirty";
+                P2res = THIRTY;
             if (player2WonPoints==3)
-                P2res = "Forty";
+                P2res = FORTY;
             
-            P1res = "Love";
+            P1res = LOVE;
             score = P1res + "-" + P2res;
         }
         
         if (player1WonPoints>player2WonPoints && player1WonPoints < 4)
         {
             if (player1WonPoints==2)
-                P1res="Thirty";
+                P1res=THIRTY;
             if (player1WonPoints==3)
-                P1res="Forty";
+                P1res=FORTY;
             if (player2WonPoints==1)
-                P2res="Fifteen";
+                P2res=FIFTEEN;
             if (player2WonPoints==2)
-                P2res="Thirty";
+                P2res=THIRTY;
             score = P1res + "-" + P2res;
         }
         if (player2WonPoints>player1WonPoints && player2WonPoints < 4)
         {
             if (player2WonPoints==2)
-                P2res="Thirty";
+                P2res=THIRTY;
             if (player2WonPoints==3)
-                P2res="Forty";
+                P2res=FORTY;
             if (player1WonPoints==1)
-                P1res="Fifteen";
+                P1res=FIFTEEN;
             if (player1WonPoints==2)
-                P1res="Thirty";
+                P1res=THIRTY;
             score = P1res + "-" + P2res;
         }
         
         if (player1WonPoints > player2WonPoints && player2WonPoints >= 3)
         {
-            score = "Advantage "+player1Name;
+            score = ADVANTAGE+" "+player1Name;
         }
         
         if (player2WonPoints > player1WonPoints && player1WonPoints >= 3)
         {
-            score = "Advantage "+player2Name;
+            score = ADVANTAGE+" "+player2Name;
         }
         
         if (player1WonPoints>=4 && player2WonPoints>=0 && (player1WonPoints-player2WonPoints)>=2)
         {
-            score = "Win for "+player1Name;
+            score = WIN_FOR+" "+player1Name;
         }
         if (player2WonPoints>=4 && player1WonPoints>=0 && (player2WonPoints-player1WonPoints)>=2)
         {
-            score = "Win for "+player2Name;
+            score = WIN_FOR+" "+player2Name;
         }
         return score;
     }
     
     public void SetP1Score(int number){
-        
         for (int i = 0; i < number; i++)
         {
             P1Score();
@@ -112,7 +119,6 @@ public class TennisGame2 implements TennisGame
     }
     
     public void SetP2Score(int number){
-        
         for (int i = 0; i < number; i++)
         {
             P2Score();
