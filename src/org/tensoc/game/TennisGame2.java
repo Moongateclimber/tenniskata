@@ -41,12 +41,12 @@ public class TennisGame2 implements TennisGame {
 		String P2res = "";
 
 		String score = "";
-		if (player1WonPoints == player2WonPoints && player1WonPoints < 4) {
-			score = getNameForPointsWon(player1WonPoints);
-			score += "-" + ALL;
+		if (player1WonPoints == player2WonPoints && player1WonPoints < 3) {
+			return getNameForPointsWon(player1WonPoints) + "-" + ALL;
 		}
+		
 		if (player1WonPoints == player2WonPoints && player1WonPoints >= 3)
-			score = DEUCE;
+			return DEUCE;
 
 		if (player1WonPoints > 0 && player2WonPoints == 0) {
 			P1res = getNameForPointsWon(player1WonPoints);
