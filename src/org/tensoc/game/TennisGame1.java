@@ -39,19 +39,19 @@ public class TennisGame1 implements TennisGame {
 			return "Unnamed score";
 		}
 	}
-	
+
 	private boolean isDeuce() {
 		return pointsWonByPlayer[0] == pointsWonByPlayer[1];
 	}
-	
+
 	private boolean lessThanForty(int score) {
-		return score<3;
+		return score < 3;
 	}
 
 	public String getScore() {
 		if (isDeuce())
-			if(lessThanForty(pointsWonByPlayer[0])) 
-				return getNamesForBasicScore(pointsWonByPlayer[0])+"-"+ALL;
+			if (lessThanForty(pointsWonByPlayer[0]))
+				return getNamesForBasicScore(pointsWonByPlayer[0]) + "-" + ALL;
 			else
 				return DEUCE;
 
@@ -66,18 +66,8 @@ public class TennisGame1 implements TennisGame {
 			else
 				return WIN_FOR + " " + playerNames[1];
 		} else {
-			String score = "";
-			int tempScore = 0;
-			for (int i = 1; i < 3; i++) {
-				if (i == 1)
-					tempScore = pointsWonByPlayer[0];
-				else {
-					score += "-";
-					tempScore = pointsWonByPlayer[1];
-				}
-				score += getNamesForBasicScore(tempScore);
-			}
-			return score;
+			return getNamesForBasicScore(pointsWonByPlayer[0]) + "-"
+					+ getNamesForBasicScore(pointsWonByPlayer[1]);
 		}
 	}
 }
