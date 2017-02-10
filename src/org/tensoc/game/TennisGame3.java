@@ -1,3 +1,4 @@
+package org.tensoc.game;
 
 public class TennisGame3 implements TennisGame {
     
