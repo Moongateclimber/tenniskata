@@ -41,25 +41,34 @@ public class TennisGame1 implements TennisGame {
 			return "Unnamed score";
 		}
 	}
+	
+	private boolean isDeuce() {
+		return pointsWonByPlayer1 == pointsWonByPlayer2;
+	}
+	
+	private boolean lessThanForty(int score) {
+		return score<3;
+	}
 
 	public String getScore() {
-		String score = "";
-		if (pointsWonByPlayer1 == pointsWonByPlayer2) {
-			if(pointsWonByPlayer1<3)
-				score = getNamesForBasicScore(pointsWonByPlayer1)+"-"+ALL;
-			else	
-				score = DEUCE;
-		} else if (pointsWonByPlayer1 >= 4 || pointsWonByPlayer2 >= 4) {
+		if (isDeuce())
+			if(lessThanForty(pointsWonByPlayer1)) 
+				return getNamesForBasicScore(pointsWonByPlayer1)+"-"+ALL;
+			else
+				return DEUCE;
+
+		if (pointsWonByPlayer1 >= 4 || pointsWonByPlayer2 >= 4) {
 			int minusResult = pointsWonByPlayer1 - pointsWonByPlayer2;
 			if (minusResult == 1)
-				score = ADVANTAGE + " " + player1Name;
+				return ADVANTAGE + " " + player1Name;
 			else if (minusResult == -1)
-				score = ADVANTAGE + " " + player2Name;
+				return ADVANTAGE + " " + player2Name;
 			else if (minusResult >= 2)
-				score = WIN_FOR + " " + player1Name;
+				return WIN_FOR + " " + player1Name;
 			else
-				score = WIN_FOR + " " + player2Name;
+				return WIN_FOR + " " + player2Name;
 		} else {
+			String score = "";
 			int tempScore = 0;
 			for (int i = 1; i < 3; i++) {
 				if (i == 1)
@@ -70,7 +79,7 @@ public class TennisGame1 implements TennisGame {
 				}
 				score += getNamesForBasicScore(tempScore);
 			}
+			return score;
 		}
-		return score;
 	}
 }
