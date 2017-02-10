@@ -1,6 +1,14 @@
 package org.tensoc.game;
 
 public class TennisGame1 implements TennisGame {
+	private static final String FORTY = "Forty";
+	private static final String WIN_FOR = "Win for";
+	private static final String ADVANTAGE = "Advantage";
+	private static final String DEUCE = "Deuce";
+	private static final String THIRTY = "Thirty";
+	private static final String FIFTEEN = "Fifteen";
+	private static final String ALL = "All";
+	private static final String LOVE = "Love";
 	private int pointsWonByPlayer1 = 0;
 	private int pointsWonByPlayer2 = 0;
 	private String player1Name;
@@ -24,29 +32,29 @@ public class TennisGame1 implements TennisGame {
 		if (pointsWonByPlayer1 == pointsWonByPlayer2) {
 			switch (pointsWonByPlayer1) {
 			case 0:
-				score = "Love-All";
+				score = LOVE+"-"+ALL;
 				break;
 			case 1:
-				score = "Fifteen-All";
+				score = FIFTEEN+"-"+ALL;
 				break;
 			case 2:
-				score = "Thirty-All";
+				score = THIRTY+"-"+ALL;
 				break;
 			default:
-				score = "Deuce";
+				score = DEUCE;
 				break;
 
 			}
 		} else if (pointsWonByPlayer1 >= 4 || pointsWonByPlayer2 >= 4) {
 			int minusResult = pointsWonByPlayer1 - pointsWonByPlayer2;
 			if (minusResult == 1)
-				score = "Advantage player1";
+				score = ADVANTAGE+" "+player1Name;
 			else if (minusResult == -1)
-				score = "Advantage player2";
+				score = ADVANTAGE+" "+player2Name;
 			else if (minusResult >= 2)
-				score = "Win for player1";
+				score = WIN_FOR+" "+player1Name;
 			else
-				score = "Win for player2";
+				score = WIN_FOR+" "+player2Name;
 		} else {
 			for (int i = 1; i < 3; i++) {
 				if (i == 1)
@@ -57,16 +65,16 @@ public class TennisGame1 implements TennisGame {
 				}
 				switch (tempScore) {
 				case 0:
-					score += "Love";
+					score += LOVE;
 					break;
 				case 1:
-					score += "Fifteen";
+					score += FIFTEEN;
 					break;
 				case 2:
-					score += "Thirty";
+					score += THIRTY;
 					break;
 				case 3:
-					score += "Forty";
+					score += FORTY;
 					break;
 				}
 			}
