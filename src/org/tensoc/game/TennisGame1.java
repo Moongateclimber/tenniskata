@@ -1,5 +1,26 @@
 package org.tensoc.game;
 
+class Player {
+	private int pointsWon;
+	private String name;
+
+	public Player(String name) {
+		this.name = name;
+	}
+
+	public int getPointsWon() {
+		return pointsWon;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void wonPoint() {
+		pointsWon++;
+	}
+}
+
 public class TennisGame1 implements TennisGame {
 	public static final String FORTY = "Forty";
 	public static final String WIN_FOR = "Win for";
@@ -10,39 +31,44 @@ public class TennisGame1 implements TennisGame {
 	public static final String ALL = "All";
 	public static final String LOVE = "Love";
 
-	private int pointsWonByPlayers[] = new int[2];
-	private String playerNames[] = new String[2];
+	Player players[] = new Player[2];
 
 	public TennisGame1(String player1Name, String player2Name) {
-		this.playerNames[0] = player1Name;
-		this.playerNames[1] = player2Name;
+		players[0] = new Player(player1Name);
+		players[1] = new Player(player2Name);
 	}
 
 	public void wonPoint(String playerName) {
-		if (playerName == playerNames[0])
-			pointsWonByPlayers[0] += 1;
-		else if (playerName == playerNames[1])
-			pointsWonByPlayers[1] += 1;
+		getPlayerByName(playerName).wonPoint();
+	}
+
+	private Player getPlayerByName(String playerName) {
+		for (int i = 0; i < 2; i++)
+			if (players[i].getName().equals(playerName))
+				return players[i];
+		return null;
 	}
 
 	public String getScore() {
 		if (isDeuce())
-			if (lessThanForty(pointsWonByPlayers[0]))
-				return getNamesForBasicScore(pointsWonByPlayers[0]) + "-" + ALL;
+			if (lessThanForty(players[0].getPointsWon()))
+				return getNamesForBasicScore(players[0].getPointsWon()) + "-" + ALL;
 			else
 				return DEUCE;
 
-		if (moreThanForty(pointsWonByPlayers[0])
-				|| moreThanForty(pointsWonByPlayers[1]))
+		if (moreThanForty(players[0].getPointsWon())
+				|| moreThanForty(players[1].getPointsWon()))
 			for (int i = 0; i < 2; i++) {
-				if (pointsWonByPlayers[i] == pointsWonByPlayers[otherPlayerIndex(i)] + 1)
-					return ADVANTAGE + " " + playerNames[i];
-				if (pointsWonByPlayers[i] > pointsWonByPlayers[otherPlayerIndex(i)] + 1)
-					return WIN_FOR + " " + playerNames[i];
+				if (players[i].getPointsWon() == players[otherPlayerIndex(i)]
+						.getPointsWon() + 1)
+					return ADVANTAGE + " " + players[i].getName();
+				if (players[i].getPointsWon() > players[otherPlayerIndex(i)]
+						.getPointsWon() + 1)
+					return WIN_FOR + " " + players[i].getName();
 			}
 
-		return getNamesForBasicScore(pointsWonByPlayers[0]) + "-"
-				+ getNamesForBasicScore(pointsWonByPlayers[1]);
+		return getNamesForBasicScore(players[0].getPointsWon()) + "-"
+				+ getNamesForBasicScore(players[1].getPointsWon());
 	}
 
 	private String getNamesForBasicScore(int score) {
@@ -61,7 +87,7 @@ public class TennisGame1 implements TennisGame {
 	}
 
 	private boolean isDeuce() {
-		return pointsWonByPlayers[0] == pointsWonByPlayers[1];
+		return players[0].getPointsWon() == players[1].getPointsWon();
 	}
 
 	private boolean lessThanForty(int score) {
