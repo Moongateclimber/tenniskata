@@ -51,11 +51,11 @@ public class TennisGame2 implements TennisGame {
 			return ADVANTAGE + " " + player2Name;
 		}
 
-		if (player1WonPoints >= 4 && player2WonPoints >= 0
+		if (player1WonPoints >= 4 
 				&& (player1WonPoints - player2WonPoints) >= 2) {
 			return  WIN_FOR + " " + player1Name;
 		}
-		if (player2WonPoints >= 4 && player1WonPoints >= 0
+		if (player2WonPoints >= 4 
 				&& (player2WonPoints - player1WonPoints) >= 2) {
 			return  WIN_FOR + " " + player2Name;
 		}
