@@ -52,23 +52,31 @@ public class TennisGame1 implements TennisGame {
 	public String getScore() {
 		if (isDeuce())
 			if (lessThanForty(players[0].getPointsWon()))
-				return getNamesForBasicScore(players[0].getPointsWon()) + "-" + ALL;
+				return getNamesForBasicScore(players[0].getPointsWon()) + "-"
+						+ ALL;
 			else
 				return DEUCE;
 
 		if (moreThanForty(players[0].getPointsWon())
 				|| moreThanForty(players[1].getPointsWon()))
 			for (int i = 0; i < 2; i++) {
-				if (players[i].getPointsWon() == players[otherPlayerIndex(i)]
-						.getPointsWon() + 1)
+				if (onePointAdvantage(players[i]))
 					return ADVANTAGE + " " + players[i].getName();
-				if (players[i].getPointsWon() > players[otherPlayerIndex(i)]
-						.getPointsWon() + 1)
+				if (moreThanOnePointAdvantage(players[i]))
 					return WIN_FOR + " " + players[i].getName();
 			}
 
 		return getNamesForBasicScore(players[0].getPointsWon()) + "-"
 				+ getNamesForBasicScore(players[1].getPointsWon());
+	}
+
+	protected boolean moreThanOnePointAdvantage(Player player) {
+		return player.getPointsWon() > opponent(player)
+				.getPointsWon() + 1;
+	}
+
+	protected boolean onePointAdvantage(Player player) {
+		return player.getPointsWon() == opponent(player).getPointsWon() + 1;
 	}
 
 	private String getNamesForBasicScore(int score) {
@@ -90,16 +98,19 @@ public class TennisGame1 implements TennisGame {
 		return players[0].getPointsWon() == players[1].getPointsWon();
 	}
 
-	private boolean lessThanForty(int score) {
-		return score < 3;
+	private boolean lessThanForty(int pointsWon) {
+		return pointsWon < 3;
 	}
 
-	private boolean moreThanForty(int score) {
-		return score >= 4;
+	private boolean moreThanForty(int pointsWon) {
+		return pointsWon >= 4;
 	}
 
-	private int otherPlayerIndex(int playerIndex) {
-		return (playerIndex + 1) % 2;
+	private Player opponent(Player player) {
+		for(int i=0; i<2; i++)
+			if(players[i]!=player)
+				return players[i];
+		return null;
 	}
 
 }
