@@ -30,6 +30,21 @@ class TennisTerms {
 	public static final String FIFTEEN = "Fifteen";
 	public static final String ALL = "All";
 	public static final String LOVE = "Love";
+	
+	public static String getNamesForBasicScore(int score) {
+		switch (score) {
+		case 0:
+			return TennisTerms.LOVE;
+		case 1:
+			return TennisTerms.FIFTEEN;
+		case 2:
+			return TennisTerms.THIRTY;
+		case 3:
+			return TennisTerms.FORTY;
+		default:
+			return "Unnamed score";
+		}
+	}
 }
 
 public class TennisGame1 implements TennisGame {
@@ -64,8 +79,8 @@ public class TennisGame1 implements TennisGame {
 	}
 
 	protected boolean isAdvantage() {
-		return players[0].getPointsWon() > TennisGame1.LAST_POINT_BEFORE_ADVANTAGE_SCORING
-				|| players[1].getPointsWon() > TennisGame1.LAST_POINT_BEFORE_ADVANTAGE_SCORING;
+		return players[0].getPointsWon() > LAST_POINT_BEFORE_ADVANTAGE_SCORING
+				|| players[1].getPointsWon() > LAST_POINT_BEFORE_ADVANTAGE_SCORING;
 	}
 
 	protected boolean isDeuce() {
@@ -73,8 +88,8 @@ public class TennisGame1 implements TennisGame {
 	}
 
 	private String getDeuceScore() {
-		if (players[0].getPointsWon() < TennisGame1.LAST_POINT_BEFORE_ADVANTAGE_SCORING)
-			return getNamesForBasicScore(players[0].getPointsWon()) + "-"
+		if (players[0].getPointsWon() < LAST_POINT_BEFORE_ADVANTAGE_SCORING)
+			return TennisTerms.getNamesForBasicScore(players[0].getPointsWon()) + "-"
 					+ TennisTerms.ALL;
 		else
 			return TennisTerms.DEUCE;
@@ -91,8 +106,8 @@ public class TennisGame1 implements TennisGame {
 	}
 
 	protected String getBasicScore() {
-		return getNamesForBasicScore(players[0].getPointsWon()) + "-"
-				+ getNamesForBasicScore(players[1].getPointsWon());
+		return  TennisTerms.getNamesForBasicScore(players[0].getPointsWon()) + "-"
+				+  TennisTerms.getNamesForBasicScore(players[1].getPointsWon());
 	}
 
 	private boolean moreThanOnePointAdvantage(Player player) {
@@ -103,22 +118,7 @@ public class TennisGame1 implements TennisGame {
 		return player.getPointsWon() == opponent(player).getPointsWon() + 1;
 	}
 
-	private String getNamesForBasicScore(int score) {
-		switch (score) {
-		case 0:
-			return TennisTerms.LOVE;
-		case 1:
-			return TennisTerms.FIFTEEN;
-		case 2:
-			return TennisTerms.THIRTY;
-		case 3:
-			return TennisTerms.FORTY;
-		default:
-			return "Unnamed score";
-		}
-	}
-
-	private Player opponent(Player player) {
+		private Player opponent(Player player) {
 		for (int i = 0; i < 2; i++)
 			if (players[i] != player)
 				return players[i];
