@@ -1,14 +1,14 @@
 package org.tensoc.game;
 
 public class TennisGame2 implements TennisGame {
-	private static final String FORTY = "Forty";
-	private static final String DEUCE = "Deuce";
-	private static final String ALL = "All";
-	private static final String THIRTY = "Thirty";
-	private static final String FIFTEEN = "Fifteen";
-	private static final String LOVE = "Love";
-	private static final String WIN_FOR = "Win for";
-	private static final String ADVANTAGE = "Advantage";
+	public static final String FORTY = "Forty";
+	public static final String DEUCE = "Deuce";
+	public static final String ALL = "All";
+	public static final String THIRTY = "Thirty";
+	public static final String FIFTEEN = "Fifteen";
+	public static final String LOVE = "Love";
+	public static final String WIN_FOR = "Win for";
+	public static final String ADVANTAGE = "Advantage";
 
 	private int player1WonPoints;
 	private int player2WonPoints;
@@ -21,7 +21,7 @@ public class TennisGame2 implements TennisGame {
 		this.player2Name = player2Name;
 	}
 
-	String getNameForPointsWon(int pointsWon) {
+	private static String getNameForPointsWon(int pointsWon) {
 		switch (pointsWon) {
 		case 0:
 			return LOVE;
@@ -36,11 +36,7 @@ public class TennisGame2 implements TennisGame {
 		}
 	}
 
-	private boolean advantage(int firstPlayerPoints, int secondPlayerPoints) {
-		return firstPlayerPoints == secondPlayerPoints + 1
-				&& secondPlayerPoints >= 3;
-	}
-
+	
 	private boolean advantagePlayer1() {
 		return advantage(player1WonPoints, player2WonPoints);
 	}
@@ -49,14 +45,22 @@ public class TennisGame2 implements TennisGame {
 		return advantage(player2WonPoints, player1WonPoints);
 	}
 
+	private static boolean advantage(int firstPlayerPoints, int secondPlayerPoints) {
+		return firstPlayerPoints == secondPlayerPoints + 1
+				&& secondPlayerPoints >= 3;
+	}
+
 	private boolean winPlayer1() {
-		return player1WonPoints >= 4
-				&& (player1WonPoints - player2WonPoints) >= 2;
+		return win(player1WonPoints, player2WonPoints);
 	}
 
 	private boolean winPlayer2() {
-		return player2WonPoints >= 4
-				&& (player2WonPoints - player1WonPoints) >= 2;
+		return win(player2WonPoints, player1WonPoints);
+	}
+
+	private static boolean win(int firstPlayerPoints, int secondPlayerPoints) {
+		return firstPlayerPoints >= 4
+				&& (firstPlayerPoints - secondPlayerPoints) >= 2;
 	}
 
 	public String getScore() {
