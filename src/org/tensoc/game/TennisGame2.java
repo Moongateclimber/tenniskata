@@ -47,6 +47,16 @@ public class TennisGame2 implements TennisGame {
 	private boolean advantagePlayer2() {
 		return advantage(player2WonPoints, player1WonPoints);
 	}
+	
+	private boolean winPlayer1() {
+		return player1WonPoints >= 4 
+				&& (player1WonPoints - player2WonPoints) >= 2;
+	}
+
+	private boolean winPlayer2() {
+		return player2WonPoints >= 4 
+				&& (player2WonPoints - player1WonPoints) >= 2;
+	}
 
 	public String getScore() {
 		if (player1WonPoints == player2WonPoints && player1WonPoints < 3)
@@ -61,12 +71,10 @@ public class TennisGame2 implements TennisGame {
 		if (advantagePlayer2()) 
 			return ADVANTAGE + " " + player2Name;
 
-		if (player1WonPoints >= 4 
-				&& (player1WonPoints - player2WonPoints) >= 2) 
+		if (winPlayer1()) 
 			return  WIN_FOR + " " + player1Name;
 
-		if (player2WonPoints >= 4 
-				&& (player2WonPoints - player1WonPoints) >= 2) 
+		if (winPlayer2()) 
 			return  WIN_FOR + " " + player2Name;
 		
 		return getNameForPointsWon(player1WonPoints)+"-"+getNameForPointsWon(player2WonPoints);
