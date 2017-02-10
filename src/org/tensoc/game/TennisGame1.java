@@ -10,7 +10,7 @@ public class TennisGame1 implements TennisGame {
 	public static final String ALL = "All";
 	public static final String LOVE = "Love";
 
-	private int pointsWonByPlayer[] = new int[2];
+	private int pointsWonByPlayers[] = new int[2];
 	private String playerNames[] = new String[2];
 
 	public TennisGame1(String player1Name, String player2Name) {
@@ -20,9 +20,29 @@ public class TennisGame1 implements TennisGame {
 
 	public void wonPoint(String playerName) {
 		if (playerName == playerNames[0])
-			pointsWonByPlayer[0] += 1;
+			pointsWonByPlayers[0] += 1;
 		else if (playerName == playerNames[1])
-			pointsWonByPlayer[1] += 1;
+			pointsWonByPlayers[1] += 1;
+	}
+
+	public String getScore() {
+		if (isDeuce())
+			if (lessThanForty(pointsWonByPlayers[0]))
+				return getNamesForBasicScore(pointsWonByPlayers[0]) + "-" + ALL;
+			else
+				return DEUCE;
+
+		if (moreThanForty(pointsWonByPlayers[0])
+				|| moreThanForty(pointsWonByPlayers[1]))
+			for (int i = 0; i < 2; i++) {
+				if (pointsWonByPlayers[i] == pointsWonByPlayers[otherPlayerIndex(i)] + 1)
+					return ADVANTAGE + " " + playerNames[i];
+				if (pointsWonByPlayers[i] > pointsWonByPlayers[otherPlayerIndex(i)] + 1)
+					return WIN_FOR + " " + playerNames[i];
+			}
+
+		return getNamesForBasicScore(pointsWonByPlayers[0]) + "-"
+				+ getNamesForBasicScore(pointsWonByPlayers[1]);
 	}
 
 	private String getNamesForBasicScore(int score) {
@@ -41,37 +61,19 @@ public class TennisGame1 implements TennisGame {
 	}
 
 	private boolean isDeuce() {
-		return pointsWonByPlayer[0] == pointsWonByPlayer[1];
+		return pointsWonByPlayers[0] == pointsWonByPlayers[1];
 	}
 
 	private boolean lessThanForty(int score) {
 		return score < 3;
 	}
-	
+
 	private boolean moreThanForty(int score) {
-		return score >=4;
-	}
-	
-	int otherPlayerIndex(int playerIndex) {
-		return (playerIndex+1)%2;
+		return score >= 4;
 	}
 
-	public String getScore() {
-		if (isDeuce())
-			if (lessThanForty(pointsWonByPlayer[0]))
-				return getNamesForBasicScore(pointsWonByPlayer[0]) + "-" + ALL;
-			else
-				return DEUCE;
-
-		if (moreThanForty(pointsWonByPlayer[0]) || moreThanForty(pointsWonByPlayer[1]))
-			for(int i=0; i<2; i++) {
-				if(pointsWonByPlayer[i] == pointsWonByPlayer[otherPlayerIndex(i)]+1)
-					return ADVANTAGE + " " + playerNames[i];
-				if(pointsWonByPlayer[i] > pointsWonByPlayer[otherPlayerIndex(i)]+1)
-					return WIN_FOR + " " + playerNames[i];
-			}
-		
-		return getNamesForBasicScore(pointsWonByPlayer[0]) + "-"
-					+ getNamesForBasicScore(pointsWonByPlayer[1]);
+	private int otherPlayerIndex(int playerIndex) {
+		return (playerIndex + 1) % 2;
 	}
+
 }
