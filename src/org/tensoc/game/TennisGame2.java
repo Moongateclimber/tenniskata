@@ -63,45 +63,8 @@ public class TennisGame2 implements TennisGame {
 				&& (player2WonPoints - player1WonPoints) >= 2) {
 			return  WIN_FOR + " " + player2Name;
 		}
-
-		if (player1WonPoints > 0 && player2WonPoints == 0) {
-			P1res = getNameForPointsWon(player1WonPoints);
-
-			P2res = LOVE;
-			score = P1res + "-" + P2res;
-		}
-		if (player2WonPoints > 0 && player1WonPoints == 0) {
-			P2res = getNameForPointsWon(player2WonPoints);
-
-			P1res = LOVE;
-			score = P1res + "-" + P2res;
-		}
-
-		if (player1WonPoints > player2WonPoints && player1WonPoints < 4) {
-			if (player1WonPoints == 2)
-				P1res = THIRTY;
-			if (player1WonPoints == 3)
-				P1res = FORTY;
-			if (player2WonPoints == 1)
-				P2res = FIFTEEN;
-			if (player2WonPoints == 2)
-				P2res = THIRTY;
-			score = P1res + "-" + P2res;
-		}
 		
-		if (player2WonPoints > player1WonPoints && player2WonPoints < 4) {
-			if (player2WonPoints == 2)
-				P2res = THIRTY;
-			if (player2WonPoints == 3)
-				P2res = FORTY;
-			if (player1WonPoints == 1)
-				P1res = FIFTEEN;
-			if (player1WonPoints == 2)
-				P1res = THIRTY;
-			score = P1res + "-" + P2res;
-		}
-
-return score;
+		return getNameForPointsWon(player1WonPoints)+"-"+getNameForPointsWon(player2WonPoints);
 	}
 
 	private void player1WonPoint() {
