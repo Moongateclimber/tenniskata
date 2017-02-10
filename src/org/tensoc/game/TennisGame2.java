@@ -35,11 +35,12 @@ public class TennisGame2 implements TennisGame {
 			return "";
 		}
 	}
-	
+
 	private boolean advantage(int firstPlayerPoints, int secondPlayerPoints) {
-		return firstPlayerPoints == secondPlayerPoints+1 && secondPlayerPoints >= 3;
+		return firstPlayerPoints == secondPlayerPoints + 1
+				&& secondPlayerPoints >= 3;
 	}
-	
+
 	private boolean advantagePlayer1() {
 		return advantage(player1WonPoints, player2WonPoints);
 	}
@@ -47,37 +48,46 @@ public class TennisGame2 implements TennisGame {
 	private boolean advantagePlayer2() {
 		return advantage(player2WonPoints, player1WonPoints);
 	}
-	
+
 	private boolean winPlayer1() {
-		return player1WonPoints >= 4 
+		return player1WonPoints >= 4
 				&& (player1WonPoints - player2WonPoints) >= 2;
 	}
 
 	private boolean winPlayer2() {
-		return player2WonPoints >= 4 
+		return player2WonPoints >= 4
 				&& (player2WonPoints - player1WonPoints) >= 2;
 	}
 
 	public String getScore() {
 		if (player1WonPoints == player2WonPoints && player1WonPoints < 3)
 			return getNameForPointsWon(player1WonPoints) + "-" + ALL;
-		
+
 		if (player1WonPoints == player2WonPoints && player1WonPoints >= 3)
 			return DEUCE;
 
 		if (advantagePlayer1())
-			return ADVANTAGE + " " + player1Name;
+			return getAdvantageMessage(player1Name);
 
-		if (advantagePlayer2()) 
-			return ADVANTAGE + " " + player2Name;
+		if (advantagePlayer2())
+			return getAdvantageMessage(player2Name);
 
-		if (winPlayer1()) 
-			return  WIN_FOR + " " + player1Name;
+		if (winPlayer1())
+			return getWinMessage(player1Name);
 
-		if (winPlayer2()) 
-			return  WIN_FOR + " " + player2Name;
-		
-		return getNameForPointsWon(player1WonPoints)+"-"+getNameForPointsWon(player2WonPoints);
+		if (winPlayer2())
+			return getWinMessage(player2Name);
+
+		return getNameForPointsWon(player1WonPoints) + "-"
+				+ getNameForPointsWon(player2WonPoints);
+	}
+
+	private String getAdvantageMessage(String name) {
+		return ADVANTAGE + " " + name;
+	}
+
+	private String getWinMessage(String name) {
+		return WIN_FOR + " " + name;
 	}
 
 	private void player1WonPoint() {
