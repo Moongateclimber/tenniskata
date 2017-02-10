@@ -30,7 +30,7 @@ class TennisTerms {
 	public static final String FIFTEEN = "Fifteen";
 	public static final String ALL = "All";
 	public static final String LOVE = "Love";
-	
+
 	public static String getNamesForBasicScore(int score) {
 		switch (score) {
 		case 0:
@@ -78,51 +78,49 @@ public class TennisGame1 implements TennisGame {
 		return getBasicScore();
 	}
 
-	protected boolean isAdvantage() {
+	private boolean isAdvantage() {
 		return players[0].getPointsWon() > LAST_POINT_BEFORE_ADVANTAGE_SCORING
 				|| players[1].getPointsWon() > LAST_POINT_BEFORE_ADVANTAGE_SCORING;
 	}
 
-	protected boolean isDeuce() {
+	private boolean isDeuce() {
 		return players[0].getPointsWon() == players[1].getPointsWon();
 	}
 
 	private String getDeuceScore() {
 		if (players[0].getPointsWon() < LAST_POINT_BEFORE_ADVANTAGE_SCORING)
-			return TennisTerms.getNamesForBasicScore(players[0].getPointsWon()) + "-"
-					+ TennisTerms.ALL;
+			return TennisTerms.getNamesForBasicScore(players[0].getPointsWon())
+					+ "-" + TennisTerms.ALL;
 		else
 			return TennisTerms.DEUCE;
 	}
 
 	private String getAdvantageScore() {
-		for (int i = 0; i < 2; i++) {
-			if (onePointAdvantage(players[i]))
-				return TennisTerms.ADVANTAGE + " " + players[i].getName();
-			if (moreThanOnePointAdvantage(players[i]))
-				return TennisTerms.WIN_FOR + " " + players[i].getName();
-		}
-		return null;
+		Player leadingPlayer = getLeadingPlayer();
+
+		if (onePointAdvantage(leadingPlayer))
+			return TennisTerms.ADVANTAGE + " " + leadingPlayer.getName();
+		else
+			return TennisTerms.WIN_FOR + " " + leadingPlayer.getName();
 	}
 
-	protected String getBasicScore() {
-		return  TennisTerms.getNamesForBasicScore(players[0].getPointsWon()) + "-"
-				+  TennisTerms.getNamesForBasicScore(players[1].getPointsWon());
+	private Player getLeadingPlayer() {
+		return players[0].getPointsWon() > players[1].getPointsWon() ? players[0]
+				: players[1];
 	}
 
-	private boolean moreThanOnePointAdvantage(Player player) {
-		return player.getPointsWon() > opponent(player).getPointsWon() + 1;
+	private String getBasicScore() {
+		return TennisTerms.getNamesForBasicScore(players[0].getPointsWon())
+				+ "-"
+				+ TennisTerms.getNamesForBasicScore(players[1].getPointsWon());
 	}
 
 	private boolean onePointAdvantage(Player player) {
 		return player.getPointsWon() == opponent(player).getPointsWon() + 1;
 	}
 
-		private Player opponent(Player player) {
-		for (int i = 0; i < 2; i++)
-			if (players[i] != player)
-				return players[i];
-		return null;
+	private Player opponent(Player player) {
+		return (players[0] == player ? players[1] : players[0]);
 	}
 
 }
