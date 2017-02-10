@@ -35,6 +35,18 @@ public class TennisGame2 implements TennisGame {
 			return "";
 		}
 	}
+	
+	private boolean advantage(int firstPlayerPoints, int secondPlayerPoints) {
+		return firstPlayerPoints == secondPlayerPoints+1 && secondPlayerPoints >= 3;
+	}
+	
+	private boolean advantagePlayer1() {
+		return advantage(player1WonPoints, player2WonPoints);
+	}
+
+	private boolean advantagePlayer2() {
+		return advantage(player2WonPoints, player1WonPoints);
+	}
 
 	public String getScore() {
 		if (player1WonPoints == player2WonPoints && player1WonPoints < 3)
@@ -43,10 +55,10 @@ public class TennisGame2 implements TennisGame {
 		if (player1WonPoints == player2WonPoints && player1WonPoints >= 3)
 			return DEUCE;
 
-		if (player1WonPoints == player2WonPoints+1 && player2WonPoints >= 3)
+		if (advantagePlayer1())
 			return ADVANTAGE + " " + player1Name;
 
-		if (player2WonPoints == player1WonPoints+1 && player1WonPoints >= 3) 
+		if (advantagePlayer2()) 
 			return ADVANTAGE + " " + player2Name;
 
 		if (player1WonPoints >= 4 
