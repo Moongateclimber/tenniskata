@@ -10,6 +10,8 @@ public class TennisGame2 implements TennisGame {
 	public static final String WIN_FOR = "Win for";
 	public static final String ADVANTAGE = "Advantage";
 
+	private static final int POINTS_FOR_FORTY = 3;
+
 	private int player1WonPoints;
 	private int player2WonPoints;
 
@@ -47,7 +49,7 @@ public class TennisGame2 implements TennisGame {
 	private static boolean advantage(int firstPlayerPoints,
 			int secondPlayerPoints) {
 		return firstPlayerPoints == secondPlayerPoints + 1
-				&& secondPlayerPoints >= 3;
+				&& secondPlayerPoints >= POINTS_FOR_FORTY;
 	}
 
 	private boolean winPlayer1() {
@@ -59,15 +61,15 @@ public class TennisGame2 implements TennisGame {
 	}
 
 	private static boolean win(int firstPlayerPoints, int secondPlayerPoints) {
-		return firstPlayerPoints >= 4
+		return firstPlayerPoints > POINTS_FOR_FORTY
 				&& (firstPlayerPoints - secondPlayerPoints) >= 2;
 	}
 
 	public String getScore() {
-		if (player1WonPoints == player2WonPoints && player1WonPoints < 3)
+		if (player1WonPoints == player2WonPoints && player1WonPoints < POINTS_FOR_FORTY)
 			return getNameForPointsWon(player1WonPoints) + "-" + ALL;
 
-		if (player1WonPoints == player2WonPoints && player1WonPoints >= 3)
+		if (player1WonPoints == player2WonPoints && player1WonPoints >= POINTS_FOR_FORTY)
 			return DEUCE;
 
 		if (advantagePlayer1())
